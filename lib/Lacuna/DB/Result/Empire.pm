@@ -551,7 +551,7 @@ sub inc_rpc_count {
 # circumstances, or for testing purposes.  In that case, this can
 # encapsulate the arcane magic somewhat.  This should not be exposed via
 # the admin UI, but can be called on the server for example as:
-# perl -I/data/Lacuna-Server/lib -ML -e 'LD->empire(shift)->reset_rpc' 'Jandor Trading'
+# perl -I/home/lacuna/server/lib -ML -e 'LD->empire(shift)->reset_rpc' 'Jandor Trading'
 sub reset_rpc {
     my ($self) = @_;
     my $cache  = Lacuna->cache;
@@ -903,21 +903,21 @@ sub find_home_planet {
         $body_search{'me.zone'} = $invite->zone;
         $star_search{zone} = $invite->zone;
     }
-    elsif ($sz_param and $sz_param->{active}) {
-       if ($sz_param->{zone}) {
-           $body_search{'me.zone'} = { in => $sz_param->{zone_list} };
-           $star_search{zone} = { in => $sz_param->{zone_list} };
-       }
-       if ($sz_param->{coord}) {
-           $body_search{'me.x'} = { between => $sz_param->{x} };
-           $body_search{'me.y'} = { between => $sz_param->{y} };
-           $star_search{x} = { between => $sz_param->{x} };
-           $star_search{y} = { between => $sz_param->{y} };
-       }
-    }
-    else {
-         $body_search{'me.usable_as_starter_enabled'} = 1;
-    }
+    # elsif ($sz_param and $sz_param->{active}) {
+    #    if ($sz_param->{zone}) {
+    #        $body_search{'me.zone'} = { in => $sz_param->{zone_list} };
+    #        $star_search{zone} = { in => $sz_param->{zone_list} };
+    #    }
+    #    if ($sz_param->{coord}) {
+    #        $body_search{'me.x'} = { between => $sz_param->{x} };
+    #        $body_search{'me.y'} = { between => $sz_param->{y} };
+    #        $star_search{x} = { between => $sz_param->{x} };
+    #        $star_search{y} = { between => $sz_param->{y} };
+    #    }
+    # }
+    # else {
+    #      $body_search{'me.usable_as_starter_enabled'} = 1;
+    # }
     @stars  = Lacuna->db->resultset('Map::Star')->search(\%star_search)->get_column('id')->all;
     $body_search{'me.star_id'} = { 'in' => \@stars };
     my @bodies = shuffle $planets->search( \%body_search, { join => 'star' } );
@@ -1043,7 +1043,7 @@ sub check_for_repeat_message {
 
 sub send_predefined_message {
     my ($self, %options) = @_;
-    my $path = '/data/Lacuna-Server/var/messages/'.$options{filename};
+    my $path = '/home/lacuna/server/var/messages/'.$options{filename};
     if (open my $file, "<", $path) {
         my $message;
         {

@@ -9,7 +9,7 @@ useall __PACKAGE__;
 
 our $VERSION = 3.0925;
 
-my $config = Config::JSON->new('/data/Lacuna-Server/etc/lacuna.conf');
+my $config = Config::JSON->new('/home/lacuna/server/etc/lacuna.conf');
 my $db = Lacuna::DB->connect($config->get('db/dsn'),$config->get('db/username'),$config->get('db/password'), { mysql_enable_utf8 => 1});
 my $cache = Lacuna::Cache->new(servers => $config->get('memcached'));
 my $queue;

@@ -1,6 +1,6 @@
 use 5.010;
 use strict;
-use lib '/data/Lacuna-Server/lib';
+use lib '/home/lacuna/server/lib';
 use L;
 use Getopt::Long;
 use utf8;

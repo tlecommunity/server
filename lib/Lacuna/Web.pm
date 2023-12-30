@@ -97,7 +97,7 @@ sub format_error {
 
 sub wrapper {
     my ($self, $content, $options) = @_;
-    if (open my $file, "<", '/data/Lacuna-Server/var/wrapper.html') {
+    if (open my $file, "<", '/home/lacuna/server/var/wrapper.html') {
         my $html;
         {
             local $/;

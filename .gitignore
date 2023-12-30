@@ -4,9 +4,11 @@ bin/schedule_captcha.pid
 bin/setup/server/*.gz
 bin/setup/server/*.rpm
 bin/setup/server/*/
-etc
+etc/
 var/www/public/local.html
 var/www/public/server_overview.json
 var/www/public/starmap.json
 var/www/public/api
 var/www/public/captcha
+data/
+etc-docker/logs/

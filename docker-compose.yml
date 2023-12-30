@@ -1,0 +1,148 @@
+version: '2'
+
+services:
+
+  ########################
+  ## BEANSTALKD CONSOLE ##
+  ########################
+
+  lacuna-beanstalkd-console:
+    container_name: 'lacuna-beanstalkd-console'
+    depends_on:
+      - 'lacuna-beanstalkd'
+    image: 'schickling/beanstalkd-console'
+    ports:
+      - '2080:2080'
+
+  ################
+  ## BEANSTALKD ##
+  ################
+
+  lacuna-beanstalkd:
+    container_name: 'lacuna-beanstalkd'
+    image: 'schickling/beanstalkd'
+    ports:
+      - '11300:11300'
+
+  ###############
+  ## BG WORKER ##
+  ###############
+
+  # lacuna-bg-worker:
+  #   command: 'perl bg_worker.pl daemon --nodaemonize --verbose'
+  #   container_name: 'lacuna-bg-worker'
+  #   depends_on:
+  #     - 'lacuna-server'
+  #   image: 'lacuna/lacuna-server'
+  #   volumes:
+  #       - ./bin:/home/lacuna/server/bin
+  #       - ./docs:/home/lacuna/server/docs
+  #       - ./etc-docker:/home/lacuna/server/etc
+  #       - ./log:/home/lacuna/server/log
+  #       - ./lib:/home/lacuna/server/lib
+  #       - ./t:/home/lacuna/server/t
+  #       - ./var:/home/lacuna/server/var
+
+  ###############
+  ## MEMCACHED ##
+  ###############
+
+  lacuna-memcached:
+    container_name: 'lacuna-memcached'
+    image: 'memcached'
+
+  ##################
+  ## MYSQL SERVER ##
+  ##################
+
+  lacuna-mysql-server:
+    container_name: 'lacuna-mysql-server'
+    environment:
+      - 'MYSQL_ROOT_PASSWORD=lacuna'
+    image: 'mysql:5.5'
+    volumes:
+      - './data:/var/lib/mysql'
+    ports:
+      - '3306:3306'
+
+  ################
+  ## PHPMYADMIN ##
+  ################
+
+  lacuna-phpmyadmin:
+    container_name: 'lacuna-phpmyadmin'
+    image: 'phpmyadmin:5.2-apache'
+    environment:
+      - 'PMA_HOST=lacuna-mysql-server'
+    ports:
+      - '8000:80'
+    depends_on:
+      - 'lacuna-mysql-server'
+    links:
+      - 'lacuna-mysql-server'
+
+  ###########
+  ## NGINX ##
+  ###########
+
+  lacuna-nginx:
+    build:
+      context: .
+      dockerfile: ./docker/build-nginx/Dockerfile
+    container_name: 'lacuna-nginx'
+    depends_on:
+      - 'lacuna-server'
+    image: 'lacuna/lacuna-nginx'
+    ports:
+      - '8080:80'
+      - '8443:443'
+    volumes:
+      - ./etc-docker/nginx.conf:/etc/nginx/nginx.conf
+      - ./etc-docker:/home/lacuna/server/etc
+      - ./var:/home/lacuna/server/var
+      - ./log:/home/lacuna/server/log
+      - ./captcha:/home/lacuna/server/captcha
+      - ./assets:/home/lacuna/server/var/www/public/assets
+      - ./var/www/public/api/api.css:/home/lacuna/server/var/www/public/api/api.css
+
+  ###########
+  ## REDIS ##
+  ###########
+
+  lacuna-redis:
+    container_name: 'lacuna-redis'
+    image: redis
+    ports:
+      - '6379:6379'
+
+  ############
+  ## SERVER ##
+  ############
+
+  lacuna-server:
+    build:
+      context: .
+      dockerfile: ./docker/build-server/Dockerfile
+    command: '/bin/bash startdev.sh'
+    container_name: 'lacuna-server'
+    depends_on:
+      - 'lacuna-mysql-server'
+      - 'lacuna-phpmyadmin'
+      - 'lacuna-redis'
+      - 'lacuna-memcached'
+      - 'lacuna-beanstalkd'
+    environment:
+      - 'TLE_NO_MIDDLEWARE=1'
+    image: 'lacuna/lacuna-server'
+    ports:
+      - '5000:5000'
+    volumes:
+      - ./bin:/home/lacuna/server/bin
+      - ./captcha:/home/lacuna/server/captcha
+      - ./docs:/home/lacuna/server/docs
+      - ./etc-docker:/home/lacuna/server/etc
+      - ./log:/home/lacuna/server/log
+      - ./lib:/home/lacuna/server/lib
+      - ./t:/home/lacuna/server/t
+      - ./var:/home/lacuna/server/var
+      - ./var/www/public/api/api.css:/home/lacuna/server/var/www/public/api/api.css

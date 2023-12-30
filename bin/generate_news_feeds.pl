@@ -1,5 +1,5 @@
 use 5.010;
-use lib '/data/Lacuna-Server/lib';
+use lib '/home/lacuna/server/lib';
 use Lacuna::DB;
 use Lacuna;
 use XML::FeedPP;

@@ -1,5 +1,5 @@
 use strict;
-use lib '/data/Lacuna-Server/lib';
+use lib '/home/lacuna/server/lib';
 use Lacuna;
 use Lacuna::Constants qw(FOOD_TYPES ORE_TYPES);
 use DBI;
