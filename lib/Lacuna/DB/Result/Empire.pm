@@ -391,7 +391,8 @@ sub add_medal {
     }
     if ($send_message && !$self->skip_medal_messages) {
         my $name = $medal->name;
-        my $image = 'https://d16cbq0l6kkf21.cloudfront.net/assets/medal/'.$type.'.png';
+        my $server_url = Lacuna->config->get('server_url');
+        my $image = $server_url.'assets/medal/'.$type.'.png';
         $self->send_predefined_message(
             tags        => ['Medal'],
             filename    => 'medal.txt',

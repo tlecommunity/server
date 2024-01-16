@@ -647,6 +647,7 @@ before finish_work => sub {
         my $body = $self->body;
         $body->add_glyph($ore);
         my $empire = $body->empire;
+        my $server_url = Lacuna->config->get('server_url');
         $empire->send_predefined_message(
             tags        => ['Alert'],
             filename    => 'glyph_discovered.txt',
@@ -654,7 +655,7 @@ before finish_work => sub {
             attachments => {
                 image => {
                     title   => $ore,
-                    url     => 'https://d16cbq0l6kkf21.cloudfront.net/assets/glyphs/'.$ore.'.png',
+                    url     => $server_url.'assets/glyphs/'.$ore.'.png',
                 }
             }
         );

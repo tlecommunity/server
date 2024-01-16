@@ -1,3 +1,7 @@
+4.0000:
+ - Fix: Docker updates for 2023
+ - Fix: Removed references to the old S3 bucket for assets
+
 3.0925:
  - Mod: Saben made more aggressive.
  - Mod: Mission cache set at 3 days instead of 30.

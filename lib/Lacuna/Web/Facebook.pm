@@ -98,6 +98,7 @@ sub www_default {
 sub www_my_empire {
     my ($self, $request) = @_;
     my $config = Lacuna->config;
+    my $server_url = $config->get('server_url');
     my $fb = Facebook::Graph->new(
             postback    => $config->get('server_url').'facebook/my/empire',
             app_id      => $config->get('facebook/app_id'),
@@ -122,7 +123,7 @@ sub www_my_empire {
     $out .= '<h1>'.$empire->name.'</h1>';
     my $planets = $empire->planets;
     while (my $planet = $planets->next) {
-        $out .= '<div style="float: left; height: 250px; text-align: center;"><img src="https://d16cbq0l6kkf21.cloudfront.net/assets/star_system/'.$planet->image_name.'.png'.'" alt="planet">
+        $out .= '<div style="float: left; height: 250px; text-align: center;"><img src="'.$server_url.'assets/star_system/'.$planet->image_name.'.png'.'" alt="planet">
             <br>'.$planet->name.'</div>';
     }
     $out .= '<div style="clear: both;"></div>';

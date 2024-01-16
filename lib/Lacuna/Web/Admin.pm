@@ -1044,7 +1044,8 @@ sub www_set_alliance_logo {
     }
     my $out = '';
 
-    my $full_url = 'https://d16cbq0l6kkf21.cloudfront.net/assets/alliances/' . $image . '.png';
+    my $server_url = Lacuna->config->get('server_url');
+    my $full_url = $server_url.'assets/alliances/' . $image . '.png';
     my $response = LWP::UserAgent->new->head($full_url);
     if ($response->is_success)
     {
