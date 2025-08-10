@@ -1,4 +1,5 @@
-version: '2'
+volumes:
+  app-node_modules:
 
 services:
 
@@ -57,6 +58,7 @@ services:
 
   lacuna-mysql-server:
     container_name: 'lacuna-mysql-server'
+    platform: linux/amd64
     environment:
       - 'MYSQL_ROOT_PASSWORD=lacuna'
     image: 'mysql:5.5'
@@ -75,7 +77,7 @@ services:
     environment:
       - 'PMA_HOST=lacuna-mysql-server'
     ports:
-      - '8000:80'
+      - '8888:80'
     depends_on:
       - 'lacuna-mysql-server'
     links:
@@ -92,7 +94,7 @@ services:
     container_name: 'lacuna-nginx'
     depends_on:
       - 'lacuna-server'
-    image: 'lacuna/lacuna-nginx'
+    # image: 'lacuna/lacuna-nginx'
     ports:
       - '8080:80'
       - '8443:443'
@@ -104,6 +106,9 @@ services:
       - ./captcha:/home/lacuna/server/captcha
       - ./assets:/home/lacuna/server/var/www/public/assets
       - ./var/www/public/api/api.css:/home/lacuna/server/var/www/public/api/api.css
+      # - ./app/dist/index.html:/home/lacuna/server/var/www/public/index.html
+      # - ./app/dist/app:/home/lacuna/server/var/www/public/app
+      - ./app/dist:/home/lacuna/server/var/www/public/app
 
   ###########
   ## REDIS ##
@@ -114,6 +119,25 @@ services:
     image: redis
     ports:
       - '6379:6379'
+
+
+  #########
+  ## APP ##
+  #########
+
+  lacuna-app:
+    build:
+      context: .
+      dockerfile: ./docker/build-app/Dockerfile 
+    container_name: 'lacuna-app'
+    command: npx vite build
+    volumes:
+      - app-node_modules:/usr/src/app/node_modules
+      - ./app:/usr/src/app
+    environment:
+      - 'LACUNA_ASSETS_URL=/assets/'
+      - 'LACUNA_SERVER_URL=/'
+      - 'LACUNA_API_KEY=anonymous'
 
   ############
   ## SERVER ##
@@ -135,7 +159,7 @@ services:
       - 'TLE_NO_MIDDLEWARE=1'
     image: 'lacuna/lacuna-server'
     ports:
-      - '5000:5000'
+      - '3050:5000'
     volumes:
       - ./bin:/home/lacuna/server/bin
       - ./captcha:/home/lacuna/server/captcha
