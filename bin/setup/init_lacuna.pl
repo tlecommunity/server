@@ -33,13 +33,13 @@ sub create_star_map {
     my $map_size = $config->get('map_size');
     my ($start_x, $end_x) = @{$map_size->{x}};
     my ($start_y, $end_y) = @{$map_size->{y}};
-    
+
     # account for orbits
     $start_x += 2;
     $start_y += 2;
     $end_x -= 2;
     $end_y -= 2;
-    
+
     my @star_colors = (qw(magenta red green blue yellow white));
     my $made_lacuna = 0;
     say "Adding stars.";
@@ -51,7 +51,7 @@ sub create_star_map {
         my $shim = ($star_toggle) ? randint(0,3) : randint(8,10);
         for (my $x = $start_x + $shim; $x < $end_x; $x += 15) {
             $y = $real_y + randint(0,3);
-            say "Start X $x";            
+            say "Start X $x";
             #if (rand(100) <= 15) { # 15% chance of no star
             if (0) {
                 say "No star at $x, $y!";
@@ -86,11 +86,47 @@ sub add_bodies {
     my $star = shift;
     my @body_types = ('habitable', 'asteroid', 'gas giant');
     my @body_type_weights = (qw(70 10 10));
-    my @planet_classes = qw(Lacuna::DB::Result::Map::Body::Planet::P1 Lacuna::DB::Result::Map::Body::Planet::P2 Lacuna::DB::Result::Map::Body::Planet::P3 Lacuna::DB::Result::Map::Body::Planet::P4
-        Lacuna::DB::Result::Map::Body::Planet::P5 Lacuna::DB::Result::Map::Body::Planet::P6 Lacuna::DB::Result::Map::Body::Planet::P7 Lacuna::DB::Result::Map::Body::Planet::P8 Lacuna::DB::Result::Map::Body::Planet::P9
-        Lacuna::DB::Result::Map::Body::Planet::P10 Lacuna::DB::Result::Map::Body::Planet::P11 Lacuna::DB::Result::Map::Body::Planet::P12 Lacuna::DB::Result::Map::Body::Planet::P13
-        Lacuna::DB::Result::Map::Body::Planet::P14 Lacuna::DB::Result::Map::Body::Planet::P15 Lacuna::DB::Result::Map::Body::Planet::P16 Lacuna::DB::Result::Map::Body::Planet::P17
-        Lacuna::DB::Result::Map::Body::Planet::P18 Lacuna::DB::Result::Map::Body::Planet::P19 Lacuna::DB::Result::Map::Body::Planet::P20);
+    my @planet_classes = qw(
+        Lacuna::DB::Result::Map::Body::Planet::P1
+        Lacuna::DB::Result::Map::Body::Planet::P2
+        Lacuna::DB::Result::Map::Body::Planet::P3
+        Lacuna::DB::Result::Map::Body::Planet::P4
+        Lacuna::DB::Result::Map::Body::Planet::P5
+        Lacuna::DB::Result::Map::Body::Planet::P6
+        Lacuna::DB::Result::Map::Body::Planet::P7
+        Lacuna::DB::Result::Map::Body::Planet::P8
+        Lacuna::DB::Result::Map::Body::Planet::P9
+        Lacuna::DB::Result::Map::Body::Planet::P10
+        Lacuna::DB::Result::Map::Body::Planet::P11
+        Lacuna::DB::Result::Map::Body::Planet::P12
+        Lacuna::DB::Result::Map::Body::Planet::P13
+        Lacuna::DB::Result::Map::Body::Planet::P14
+        Lacuna::DB::Result::Map::Body::Planet::P15
+        Lacuna::DB::Result::Map::Body::Planet::P16
+        Lacuna::DB::Result::Map::Body::Planet::P17
+        Lacuna::DB::Result::Map::Body::Planet::P18
+        Lacuna::DB::Result::Map::Body::Planet::P19
+        Lacuna::DB::Result::Map::Body::Planet::P20
+        Lacuna::DB::Result::Map::Body::Planet::P21
+        Lacuna::DB::Result::Map::Body::Planet::P22
+        Lacuna::DB::Result::Map::Body::Planet::P23
+        Lacuna::DB::Result::Map::Body::Planet::P24
+        Lacuna::DB::Result::Map::Body::Planet::P25
+        Lacuna::DB::Result::Map::Body::Planet::P26
+        Lacuna::DB::Result::Map::Body::Planet::P27
+        Lacuna::DB::Result::Map::Body::Planet::P28
+        Lacuna::DB::Result::Map::Body::Planet::P29
+        Lacuna::DB::Result::Map::Body::Planet::P30
+        Lacuna::DB::Result::Map::Body::Planet::P31
+        Lacuna::DB::Result::Map::Body::Planet::P32
+        Lacuna::DB::Result::Map::Body::Planet::P33
+        Lacuna::DB::Result::Map::Body::Planet::P34
+        Lacuna::DB::Result::Map::Body::Planet::P35
+        Lacuna::DB::Result::Map::Body::Planet::P36
+        Lacuna::DB::Result::Map::Body::Planet::P37
+        Lacuna::DB::Result::Map::Body::Planet::P38
+        Lacuna::DB::Result::Map::Body::Planet::P39
+        Lacuna::DB::Result::Map::Body::Planet::P40);
     my @gas_giant_classes = qw(Lacuna::DB::Result::Map::Body::Planet::GasGiant::G1 Lacuna::DB::Result::Map::Body::Planet::GasGiant::G2 Lacuna::DB::Result::Map::Body::Planet::GasGiant::G3
         Lacuna::DB::Result::Map::Body::Planet::GasGiant::G4 Lacuna::DB::Result::Map::Body::Planet::GasGiant::G5);
     my @asteroid_classes = qw(Lacuna::DB::Result::Map::Body::Asteroid::A1 Lacuna::DB::Result::Map::Body::Asteroid::A2
@@ -109,7 +145,7 @@ sub add_bodies {
         my $name = $star->name." ".$orbit;
         if (randint(1,100) <= 10) { # 10% chance of no body in an orbit
             say "\tNo body at $name!";
-        } 
+        }
         else {
             my ($x, $y);
             if ($orbit == 1) {
@@ -253,7 +289,7 @@ sub create_lacunan_home_world {
     });
     $empire->insert;
     $empire->found($body);
-    $lacunans_have_been_placed = 1;    
+    $lacunans_have_been_placed = 1;
 }
 
 
