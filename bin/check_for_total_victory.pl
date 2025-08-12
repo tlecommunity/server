@@ -7,6 +7,7 @@ use Lacuna::Util qw(format_date);
 use Getopt::Long;
 use List::Util qw(max shuffle);
 use UUID::Tiny ':std';
+use experimental 'smartmatch';
 $|=1;
 our $quiet;
 GetOptions(

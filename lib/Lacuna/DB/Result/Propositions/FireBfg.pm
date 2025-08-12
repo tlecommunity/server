@@ -4,6 +4,7 @@ use Moose;
 use utf8;
 no warnings qw(uninitialized);
 extends 'Lacuna::DB::Result::Propositions';
+use experimental 'smartmatch';
 
 before pass => sub {
     my ($self) = @_;

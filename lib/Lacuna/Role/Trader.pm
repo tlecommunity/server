@@ -5,6 +5,7 @@ use feature "switch";
 use Lacuna::Constants qw(ORE_TYPES FOOD_TYPES);
 use Lacuna::Util qw(randint);
 use Data::Dumper;
+use experimental 'switch';
 
 # hopefully this constant allows the comparison later to be
 # compiled out based on how we're called.

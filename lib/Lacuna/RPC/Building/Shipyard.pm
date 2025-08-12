@@ -7,6 +7,7 @@ no warnings qw(uninitialized);
 extends 'Lacuna::RPC::Building';
 use Lacuna::Constants qw(SHIP_TYPES);
 use List::Util qw(none max min any sum reduce);
+use experimental 'smartmatch';
 
 sub app_url {
     return '/shipyard';

@@ -10,6 +10,8 @@ use List::MoreUtils qw(first_index);
 
 use Lacuna::Util qw(format_date);
 
+use experimental 'smartmatch';
+
 __PACKAGE__->load_components('DynamicSubclass');
 __PACKAGE__->table('building');
 __PACKAGE__->add_columns(

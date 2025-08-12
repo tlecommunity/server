@@ -16,6 +16,7 @@ use List::Util qw(none);
 use PerlX::Maybe qw(provided);
 use Log::Any qw($log);
 use Data::Dumper;
+use experimental 'smartmatch';
 
 # logging features are new in this level.
 use JSON::RPC::Dispatcher 0.0508;

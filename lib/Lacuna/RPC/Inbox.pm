@@ -10,6 +10,7 @@ use Lacuna::Util qw(format_date);
 use List::Util qw(none);
 use PerlX::Maybe qw(provided);
 use Time::HiRes qw(usleep);
+use experimental 'smartmatch';
 
 # This function basically handles all the "or baby" logic for
 # messages.  Can be further refined by the caller with extra ->search

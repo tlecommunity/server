@@ -15,6 +15,7 @@ use Email::Valid;
 use UUID::Tiny ':std';
 use Lacuna::Constants qw(INFLATION);
 use PerlX::Maybe qw(provided maybe);
+use experimental 'smartmatch';
 
 __PACKAGE__->table('empire');
 __PACKAGE__->add_columns(

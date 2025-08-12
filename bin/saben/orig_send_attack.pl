@@ -6,6 +6,7 @@ use Lacuna;
 use Lacuna::Util qw(randint format_date);
 use Getopt::Long;
 use AnyEvent;
+use experimental 'smartmatch';
 $|=1;
 our $quiet;
 our $randomize;

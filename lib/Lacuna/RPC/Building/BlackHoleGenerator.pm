@@ -6,6 +6,7 @@ extends 'Lacuna::RPC::Building';
 use List::Util qw(shuffle);
 use Lacuna::Util qw(randint random_element commify);
 use Lacuna::Constants qw(FOOD_TYPES ORE_TYPES);
+use experimental 'smartmatch';
 
 sub app_url {
     return '/blackholegenerator';

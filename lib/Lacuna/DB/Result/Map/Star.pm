@@ -5,6 +5,7 @@ use utf8;
 no warnings qw(uninitialized);
 extends 'Lacuna::DB::Result::Map';
 use Lacuna::Util;
+use experimental 'smartmatch';
 
 __PACKAGE__->table('star');
 __PACKAGE__->add_columns(

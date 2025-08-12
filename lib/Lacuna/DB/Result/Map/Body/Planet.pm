@@ -11,6 +11,7 @@ use Lacuna::Util qw(randint format_date random_element);
 use DateTime;
 use Data::Dumper;
 use Scalar::Util qw(weaken);
+use experimental 'smartmatch';
 
 no warnings 'uninitialized';
 

@@ -8,6 +8,7 @@ use UUID::Tiny ':std';
 use Config::JSON;
 use Lacuna::Constants qw(ORE_TYPES FOOD_TYPES);
 use feature 'switch';
+use experimental 'switch';
 use List::Util qw(sum first);
 
 __PACKAGE__->table('mission');

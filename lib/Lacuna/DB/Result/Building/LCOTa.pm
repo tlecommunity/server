@@ -6,6 +6,7 @@ no warnings qw(uninitialized);
 extends 'Lacuna::DB::Result::Building';
 use Lacuna::Constants qw(GROWTH);
 with 'Lacuna::Role::LCOT';
+use experimental 'smartmatch';
 
 use constant controller_class => 'Lacuna::RPC::Building::LCOTa';
 use constant image => 'lcota';

@@ -12,6 +12,7 @@ use Lacuna::Util qw(format_date commify kmbtq);
 use List::Util qw(sum);
 use Data::Dumper;
 use LWP::UserAgent;
+use experimental 'smartmatch';
 
 sub www_send_test_message {
     my ($self, $request, $id) = @_;

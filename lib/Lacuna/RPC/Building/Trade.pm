@@ -8,6 +8,7 @@ extends 'Lacuna::RPC::Building';
 use Guard;
 use List::Util qw(first);
 use Lacuna::Constants qw(FOOD_TYPES ORE_TYPES SHIP_WASTE_TYPES SHIP_TRADE_TYPES);
+use experimental 'switch';
 
 with 'Lacuna::Role::TraderRpc','Lacuna::Role::Ship::Trade';
 

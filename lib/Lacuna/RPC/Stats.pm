@@ -5,6 +5,7 @@ use utf8;
 no warnings qw(uninitialized);
 extends 'Lacuna::RPC';
 use Lacuna::Constants qw(SHIP_TYPES);
+use experimental 'smartmatch';
 
 sub credits {
     return [

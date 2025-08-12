@@ -7,6 +7,7 @@ extends 'Lacuna::DB::Result';
 use Lacuna::Util qw(format_date randint);
 use DateTime;
 use feature "switch";
+use experimental 'smartmatch';
 
 has 'hostile_action' => (
     is      => 'rw',

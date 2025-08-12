@@ -8,6 +8,7 @@ use Lacuna::Util qw(format_date randint);
 use DateTime;
 use Scalar::Util qw(weaken);
 use feature "switch";
+use experimental 'smartmatch';
 
 has 'hostile_action' => (
     is      => 'rw',

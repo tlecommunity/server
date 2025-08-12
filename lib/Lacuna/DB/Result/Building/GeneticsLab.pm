@@ -5,6 +5,7 @@ use utf8;
 no warnings qw(uninitialized);
 use Lacuna::Util qw(randint);
 extends 'Lacuna::DB::Result::Building';
+use experimental 'smartmatch';
 
 around 'build_tags' => sub {
     my ($orig, $class) = @_;

@@ -8,6 +8,7 @@ use Lacuna::Constants qw(ORE_TYPES FOOD_TYPES);
 use Lacuna::Util qw(randint random_element);
 use Clone qw(clone);
 use feature 'switch';
+use experimental 'smartmatch';
 
 around 'build_tags' => sub {
     my ($orig, $class) = @_;

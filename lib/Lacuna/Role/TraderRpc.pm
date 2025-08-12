@@ -4,6 +4,7 @@ use Moose::Role;
 use feature "switch";
 use Lacuna::Constants qw(ORE_TYPES FOOD_TYPES);
 use Lacuna::Util qw(randint);
+use experimental 'smartmatch';
 
 sub view_my_market {
     my ($self, $session_id, $building_id, $page_number) = @_;

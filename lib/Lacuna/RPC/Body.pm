@@ -12,6 +12,7 @@ use List::Util qw(all);
 use List::MoreUtils qw(uniq);
 use Carp;
 use feature 'switch';
+use experimental 'smartmatch';
 
 with "Lacuna::RPC::Role::Building";
 

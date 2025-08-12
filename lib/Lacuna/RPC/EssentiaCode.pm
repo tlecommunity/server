@@ -6,6 +6,7 @@ no warnings qw(uninitialized);
 extends 'Lacuna::RPC';
 use DateTime;
 use UUID::Tiny ':std';
+use experimental 'smartmatch';
 
 sub verify_key {
     my ($self, $key) = @_;

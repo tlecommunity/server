@@ -4,6 +4,7 @@ use 5.010;
 use DBI;
 use Config::JSON;
 use Text::Diff;
+use experimental 'smartmatch';
 my $config = Config::JSON->new('/home/lacuna/server/etc/lacuna.conf');
 my $dev = DBI->connect($config->get('db/dsn'), $config->get('db/username'), $config->get('db/password'));
 my $prod = DBI->connect('DBI:mysql:prod', $config->get('db/username'), $config->get('db/password'));

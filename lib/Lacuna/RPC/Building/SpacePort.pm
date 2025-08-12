@@ -9,6 +9,7 @@ use Lacuna::Util qw(format_date);
 use Data::Dumper;
 
 use feature "switch";
+use experimental 'smartmatch';
 
 sub app_url {
     return '/spaceport';
