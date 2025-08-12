@@ -1,8 +1,0 @@
-20 * * * * /data/apps/bin/perl /home/lacuna/server/bin/schedule_building.pl --noquiet --daemonize --noinitialize
-50 * * * * /data/apps/bin/perl /home/lacuna/server/bin/schedule_ship_arrival.pl --noquiet --daemonize --noinitialize
-
-0 * * * * /home/lacuna/server/bin/run_hourly.sh
-10 1,3,5,7,9,11,13,15,17,19,21,23 * * * /home/lacuna/server/bin/run_two_hourly.sh
-40 2,6,10,14,18,22 * * * /home/lacuna/server/bin/run_four_hourly.sh
-15 3 * * * /home/lacuna/server/bin/run_daily.sh
-15 6 * * 0 /home/lacuna/server/bin/run_weekly.sh

@@ -12,3 +12,5 @@ var/www/public/api
 var/www/public/captcha
 data/
 etc-docker/logs/
+tmp/
+log/

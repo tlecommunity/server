@@ -26,25 +26,6 @@ services:
       - '11300:11300'
 
   ###############
-  ## BG WORKER ##
-  ###############
-
-  # lacuna-bg-worker:
-  #   command: 'perl bg_worker.pl daemon --nodaemonize --verbose'
-  #   container_name: 'lacuna-bg-worker'
-  #   depends_on:
-  #     - 'lacuna-server'
-  #   image: 'lacuna/lacuna-server'
-  #   volumes:
-  #       - ./bin:/home/lacuna/server/bin
-  #       - ./docs:/home/lacuna/server/docs
-  #       - ./etc-docker:/home/lacuna/server/etc
-  #       - ./log:/home/lacuna/server/log
-  #       - ./lib:/home/lacuna/server/lib
-  #       - ./t:/home/lacuna/server/t
-  #       - ./var:/home/lacuna/server/var
-
-  ###############
   ## MEMCACHED ##
   ###############
 
@@ -94,7 +75,6 @@ services:
     container_name: 'lacuna-nginx'
     depends_on:
       - 'lacuna-server'
-    # image: 'lacuna/lacuna-nginx'
     ports:
       - '8080:80'
       - '8443:443'
@@ -102,10 +82,11 @@ services:
       - ./etc-docker/nginx.conf:/etc/nginx/nginx.conf
       - ./etc-docker:/home/lacuna/server/etc
       - ./var:/home/lacuna/server/var
-      - ./log:/home/lacuna/server/log
+      - ./log/nginx:/etc/nginx/logs
       - ./captcha:/home/lacuna/server/captcha
       - ./assets:/home/lacuna/server/var/www/public/assets
       - ./var/www/public/api/api.css:/home/lacuna/server/var/www/public/api/api.css
+      # TODO: fix CORS etc so that the app can run here properly
       # - ./app/dist/index.html:/home/lacuna/server/var/www/public/index.html
       # - ./app/dist/app:/home/lacuna/server/var/www/public/app
       - ./app/dist:/home/lacuna/server/var/www/public/app
@@ -119,7 +100,6 @@ services:
     image: redis
     ports:
       - '6379:6379'
-
 
   #########
   ## APP ##
@@ -135,8 +115,8 @@ services:
       - app-node_modules:/usr/src/app/node_modules
       - ./app:/usr/src/app
     environment:
-      - 'LACUNA_ASSETS_URL=/assets/'
-      - 'LACUNA_SERVER_URL=/'
+      - 'LACUNA_ASSETS_URL=https://lacuna.ocean74.net/assets/'
+      - 'LACUNA_SERVER_URL=https://lacuna.ocean74.net'
       - 'LACUNA_API_KEY=anonymous'
 
   ############
@@ -157,7 +137,6 @@ services:
       - 'lacuna-beanstalkd'
     environment:
       - 'TLE_NO_MIDDLEWARE=1'
-    image: 'lacuna/lacuna-server'
     ports:
       - '3050:5000'
     volumes:
@@ -165,8 +144,87 @@ services:
       - ./captcha:/home/lacuna/server/captcha
       - ./docs:/home/lacuna/server/docs
       - ./etc-docker:/home/lacuna/server/etc
-      - ./log:/home/lacuna/server/log
       - ./lib:/home/lacuna/server/lib
       - ./t:/home/lacuna/server/t
       - ./var:/home/lacuna/server/var
       - ./var/www/public/api/api.css:/home/lacuna/server/var/www/public/api/api.css
+      - ./tmp:/tmp
+
+  lacuna-server-building-scheduler:
+    build:
+      context: .
+      dockerfile: ./docker/build-server/Dockerfile
+    command: 'perl schedule_building.pl --noquiet --nodaemonize --noinitialize'
+    container_name: 'lacuna-server-building-scheduler'
+    depends_on:
+      - 'lacuna-mysql-server'
+      - 'lacuna-phpmyadmin'
+      - 'lacuna-redis'
+      - 'lacuna-memcached'
+      - 'lacuna-beanstalkd'
+    volumes:
+      - ./bin:/home/lacuna/server/bin
+      - ./captcha:/home/lacuna/server/captcha
+      - ./docs:/home/lacuna/server/docs
+      - ./etc-docker:/home/lacuna/server/etc
+      - ./lib:/home/lacuna/server/lib
+      - ./t:/home/lacuna/server/t
+      - ./var:/home/lacuna/server/var
+      - ./var/www/public/api/api.css:/home/lacuna/server/var/www/public/api/api.css
+      - ./tmp:/tmp
+
+  lacuna-server-ship-scheduler:
+    build:
+      context: .
+      dockerfile: ./docker/build-server/Dockerfile
+    command: 'perl schedule_ship_arrival.pl --noquiet --nodaemonize --noinitialize'
+    container_name: 'lacuna-server-ship-scheduler'
+    depends_on:
+      - 'lacuna-mysql-server'
+      - 'lacuna-phpmyadmin'
+      - 'lacuna-redis'
+      - 'lacuna-memcached'
+      - 'lacuna-beanstalkd'
+    volumes:
+      - ./bin:/home/lacuna/server/bin
+      - ./captcha:/home/lacuna/server/captcha
+      - ./docs:/home/lacuna/server/docs
+      - ./etc-docker:/home/lacuna/server/etc
+      - ./lib:/home/lacuna/server/lib
+      - ./t:/home/lacuna/server/t
+      - ./var:/home/lacuna/server/var
+      - ./var/www/public/api/api.css:/home/lacuna/server/var/www/public/api/api.css
+      - ./tmp:/tmp
+
+  lacuna-server-captcha-scheduler:
+    build:
+      context: .
+      dockerfile: ./docker/build-server/Dockerfile
+    command: 'perl schedule_captcha.pl --noquiet --nodaemonize --noinitialize'
+    container_name: 'lacuna-server-captcha-scheduler'
+    depends_on:
+      - 'lacuna-mysql-server'
+      - 'lacuna-phpmyadmin'
+      - 'lacuna-redis'
+      - 'lacuna-memcached'
+      - 'lacuna-beanstalkd'
+    volumes:
+      - ./bin:/home/lacuna/server/bin
+      - ./captcha:/home/lacuna/server/captcha
+      - ./docs:/home/lacuna/server/docs
+      - ./etc-docker:/home/lacuna/server/etc
+      - ./lib:/home/lacuna/server/lib
+      - ./t:/home/lacuna/server/t
+      - ./var:/home/lacuna/server/var
+      - ./var/www/public/api/api.css:/home/lacuna/server/var/www/public/api/api.css
+      - ./tmp:/tmp
+
+  lacuna-server-script-scheduler:
+    container_name: 'lacuna-server-script-scheduler'
+    image: mcuadros/ofelia:latest
+    depends_on:
+      - lacuna-server
+    command: daemon
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+      - ./etc-docker/schedule.ini:/etc/ofelia.conf
