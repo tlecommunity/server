@@ -16,7 +16,7 @@ __PACKAGE__->add_columns(
 
 sub uri {
     my $self = shift;
-    my $filename = $self->guid eq 'dummy' ? 'dummy.png' : substr($self->guid,0,2).'/'.$self->guid.'.png';
+    my $filename = $self->guid eq 'dummy' ? 'dummy.png' : $self->guid.'.png';
     return Lacuna->config->get('server_url').'captcha/'.$filename;
 }
 

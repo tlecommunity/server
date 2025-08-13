@@ -239,6 +239,7 @@ sub construct {
         ->random($self->riddle->[0])
         ->create( ttf => $self->style, $self->fg_color, $self->fg_color )
         ->particle;
+        die "Error loading ttf font for GD: $@" if $security_image->gdbox_empty;
     }
     
     my ($image, $mime, $string) = $security_image->info_text(
@@ -255,11 +256,7 @@ sub construct {
         compress=> 1,
     );
     
-    my $prefix = substr($self->guid, 0,2);
-    my $dir = '/home/lacuna/server/captcha/'.$prefix;
-    unless (-d $dir) {
-        mkdir $dir;
-    }
+    my $dir = '/home/lacuna/server/captcha/';
     open my $file, '>', $dir.'/'.$self->guid.'.png' or
        die "Can't write to $dir/".$self->guid.".png: $!";
     print {$file} $image;
