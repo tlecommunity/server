@@ -268,6 +268,7 @@ sub construct {
         guid    => $self->guid,
         riddle  => $self->riddle->[0],
         solution=> $self->riddle->[1],
+        created => DateTime->now,
     });
 }
     
