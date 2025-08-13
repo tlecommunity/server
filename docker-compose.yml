@@ -32,6 +32,11 @@ services:
   lacuna-memcached:
     container_name: 'lacuna-memcached'
     image: 'memcached'
+    command: 
+      # Persist cache in a file to save sessions (and other data) between restarts of the docker container
+      - --memory-file /tempfs_mount/memory_file
+    volumes:
+      - ./memcached:/tempfs_mount
 
   ##################
   ## MYSQL SERVER ##
@@ -91,16 +96,6 @@ services:
       # - ./app/dist/app:/home/lacuna/server/var/www/public/app
       - ./app/dist:/home/lacuna/server/var/www/public/app
 
-  ###########
-  ## REDIS ##
-  ###########
-
-  lacuna-redis:
-    container_name: 'lacuna-redis'
-    image: redis
-    ports:
-      - '6379:6379'
-
   #########
   ## APP ##
   #########
@@ -132,7 +127,6 @@ services:
     depends_on:
       - 'lacuna-mysql-server'
       - 'lacuna-phpmyadmin'
-      - 'lacuna-redis'
       - 'lacuna-memcached'
       - 'lacuna-beanstalkd'
     environment:
@@ -159,7 +153,6 @@ services:
     depends_on:
       - 'lacuna-mysql-server'
       - 'lacuna-phpmyadmin'
-      - 'lacuna-redis'
       - 'lacuna-memcached'
       - 'lacuna-beanstalkd'
     volumes:
@@ -182,7 +175,6 @@ services:
     depends_on:
       - 'lacuna-mysql-server'
       - 'lacuna-phpmyadmin'
-      - 'lacuna-redis'
       - 'lacuna-memcached'
       - 'lacuna-beanstalkd'
     volumes:
@@ -205,7 +197,6 @@ services:
     depends_on:
       - 'lacuna-mysql-server'
       - 'lacuna-phpmyadmin'
-      - 'lacuna-redis'
       - 'lacuna-memcached'
       - 'lacuna-beanstalkd'
     volumes:

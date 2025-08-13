@@ -47,7 +47,6 @@ RUN groupadd nogroup
 #
 RUN cpanm --notest AnyEvent::Beanstalk
 RUN cpanm --notest AnyEvent::Beanstalk
-RUN cpanm --notest AnyEvent::Redis
 RUN cpanm --notest AnyEvent::WebSocket::Client
 RUN cpanm --notest AnyEvent::WebSocket::Server
 RUN cpanm --notest App::Daemon
@@ -122,7 +121,6 @@ RUN cpanm --notest Plack::Handler::Twiggy
 RUN cpanm --notest Plack::Middleware::CrossOrigin
 RUN cpanm --notest Plack::Middleware::Headers
 RUN cpanm --notest Pod::Simple::HTML
-RUN cpanm --notest Redis
 RUN cpanm --notest Regexp::Common
 RUN cpanm --notest rlib MooseX::App
 RUN cpanm --notest Server::Starter SOAP::Lite
