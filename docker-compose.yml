@@ -154,7 +154,7 @@ services:
     build:
       context: .
       dockerfile: ./docker/build-server/Dockerfile
-    command: 'perl schedule_building.pl --noquiet --nodaemonize --noinitialize'
+    command: 'perl schedule_building.pl --noquiet --nodaemonize --initialize'
     container_name: 'lacuna-server-building-scheduler'
     depends_on:
       - 'lacuna-mysql-server'
@@ -177,7 +177,7 @@ services:
     build:
       context: .
       dockerfile: ./docker/build-server/Dockerfile
-    command: 'perl schedule_ship_arrival.pl --noquiet --nodaemonize --noinitialize'
+    command: 'perl schedule_ship_arrival.pl --noquiet --nodaemonize --initialize'
     container_name: 'lacuna-server-ship-scheduler'
     depends_on:
       - 'lacuna-mysql-server'
@@ -200,7 +200,7 @@ services:
     build:
       context: .
       dockerfile: ./docker/build-server/Dockerfile
-    command: 'perl schedule_captcha.pl --noquiet --nodaemonize --noinitialize'
+    command: 'perl schedule_captcha.pl --noquiet --nodaemonize'
     container_name: 'lacuna-server-captcha-scheduler'
     depends_on:
       - 'lacuna-mysql-server'

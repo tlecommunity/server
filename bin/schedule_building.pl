@@ -60,7 +60,7 @@ if ($initialize) {
         $schedule->delete;
     }
 
-    out('Adding building upgrades');
+    out('Adding building working end');
     my $building_rs = Lacuna->db->resultset('Building')->search({
         is_working => 1,
     });
@@ -75,7 +75,7 @@ if ($initialize) {
         });
     }
 
-    out('Adding building working end');
+    out('Adding building upgrades');
     $building_rs = Lacuna->db->resultset('Building')->search({
         is_upgrading => 1,
     });
@@ -178,6 +178,7 @@ exit 0;
 sub out {
     my ($message) = @_;
     my $logger = Log::Log4perl->get_logger;
+    print STDERR $message."\n";
     $logger->info($message);
 }
 

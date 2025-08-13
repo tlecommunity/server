@@ -151,6 +151,7 @@ exit 0;
 sub out {
     my ($message) = @_;
     my $logger = Log::Log4perl->get_logger;
+    print STDERR $message."\n";
     $logger->info($message);
 }
 
