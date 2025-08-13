@@ -14,3 +14,4 @@ data/
 etc-docker/logs/
 tmp/
 log/
+captcha/

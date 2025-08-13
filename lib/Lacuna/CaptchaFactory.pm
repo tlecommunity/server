@@ -256,7 +256,7 @@ sub construct {
     );
     
     my $prefix = substr($self->guid, 0,2);
-    my $dir = '/data/Lacuna-Captcha/public/'.$prefix;
+    my $dir = '/home/lacuna/server/captcha/'.$prefix;
     unless (-d $dir) {
         mkdir $dir;
     }
