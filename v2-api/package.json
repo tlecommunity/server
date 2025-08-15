@@ -1,0 +1,19 @@
+{
+    "name": "lacuna-v2-api",
+    "version": "1.0.0",
+    "description": "Proxy util for TLE Community",
+    "author": "Natalie Rose <natalie@omg.lol> (https://nataliethistime.com)",
+    "type": "module",
+    "private": true,
+    "main": "index.js",
+    "dependencies": {
+        "body-parser": "^2.2.0",
+        "express": "^5.1.0",
+        "morgan": "^1.10.1"
+    },
+    "devDependencies": {
+        "@types/express": "^5.0.3",
+        "@types/morgan": "^1.9.10",
+        "typescript": "^5.9.2"
+    }
+}
